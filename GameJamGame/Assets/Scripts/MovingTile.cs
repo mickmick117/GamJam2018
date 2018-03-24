@@ -29,7 +29,7 @@ public class MovingTile : MonoBehaviour {
             transform.Translate(new Vector2(0, randomDeplacement));
             horizontal = false;
         }
-        InvokeRepeating("MoveTile", 0.0f, 0.01f);
+        InvokeRepeating("MoveTile", 0.0f, 0.02f);
     }
 
     // Update is called once per frame

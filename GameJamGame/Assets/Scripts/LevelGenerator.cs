@@ -8,6 +8,8 @@ public class LevelGenerator : MonoBehaviour {
 
    public GameObject Ground;
    public GameObject MovingTile;
+   public GameObject FinishLine;
+    public GameController game;
 
     int maxGround;
     int maxLength;
@@ -16,7 +18,6 @@ public class LevelGenerator : MonoBehaviour {
     int minHeigth;
     int maxEmptySpace;
     int currentEmptySpace;
-    int currentLevel = 1;
     int tileIteration;
 
     float emptyProbability;
@@ -24,17 +25,10 @@ public class LevelGenerator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        maxGround = 100;
-        maxLength = 8;
-        minLength = 1;
-        maxHeigth = 3;
-        minHeigth = -3;
-        maxEmptySpace = 5;
+
+        setDifficulty();
         tileIteration = 1;
         currentEmptySpace = 0;
-
-        emptyProbability = 50;
-        movingTileProbability = 50;
 
         Instantiate(Ground, new Vector2(0, 0), Quaternion.identity);
 
@@ -44,7 +38,7 @@ public class LevelGenerator : MonoBehaviour {
             int movingTileRandom = Random.Range(0, 100);
             int heigth;
 
-            if (movingTileRandom < movingTileProbability)
+            if (movingTileRandom < movingTileProbability) // on met une grande tuile qui bouge
             {
                 heigth = Mathf.RoundToInt(Random.Range(minHeigth, maxHeigth));
 
@@ -58,7 +52,7 @@ public class LevelGenerator : MonoBehaviour {
                 currentEmptySpace++;
                 tileIteration++;
             }
-            else
+            else // on met des tuiles normales
             {
                 currentEmptySpace = 0;
                 int nbGround = Mathf.RoundToInt(Random.Range(minLength, maxLength));
@@ -71,6 +65,22 @@ public class LevelGenerator : MonoBehaviour {
                 }
             }            
         }
+
+        Instantiate(FinishLine, new Vector2(tileIteration, maxHeigth), Quaternion.identity);
+    }
+
+    private void setDifficulty()
+    {
+        maxGround = 30 + (10 * game.getLevel());
+        maxLength = 8;
+        minLength = 1;
+        maxHeigth = 3;
+        minHeigth = -3;
+        maxEmptySpace = 5;
+
+        int prob = 10 * game.getLevel() > 90 ? 90 : 10 * game.getLevel();
+        emptyProbability = prob;
+        movingTileProbability = prob;
     }
 	
 	// Update is called once per frame
