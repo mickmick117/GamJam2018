@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/raph.unity
+- path: Assets/Platformer2D.unity
   isLoaded: 1
   isActive: 1

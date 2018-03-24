@@ -66,7 +66,7 @@ public class Tiling : MonoBehaviour {
 			newBuddy.localScale = new Vector3 (newBuddy.localScale.x*-1, newBuddy.localScale.y, newBuddy.localScale.z);
 		}
 
-		newBuddy.parent = myTransform.parent;
+		newBuddy.parent = myTransform;
 		if (rightOrLeft > 0) {
 			newBuddy.GetComponent<Tiling>().hasALeftBuddy = true;
 		}
