@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+//REFERENCES: http://devassets.com/assets/2d-mega-pack/ FREE
+
 public class Camera2DFollow : MonoBehaviour {
 	
 	public Transform target;
@@ -17,14 +19,12 @@ public class Camera2DFollow : MonoBehaviour {
 
 	float nextTimeToSearch = 0;
 	
-	// Use this for initialization
 	void Start () {
 		lastTargetPosition = target.position;
 		offsetZ = (transform.position - target.position).z;
 		transform.parent = null;
 	}
 	
-	// Update is called once per frame
 	void Update () {
 
 		if (target == null) {
@@ -32,7 +32,6 @@ public class Camera2DFollow : MonoBehaviour {
 			return;
 		}
 
-		// only update lookahead pos if accelerating or changed direction
 		float xMoveDelta = (target.position - lastTargetPosition).x;
 
 	    bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > lookAheadMoveThreshold;
