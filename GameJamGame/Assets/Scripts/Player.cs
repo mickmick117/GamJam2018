@@ -22,6 +22,10 @@ public class Player : MonoBehaviour
     private void Update()
     {
         HandleInput();
+        if (myRigidbody.position.y < -4)
+        {
+            Application.LoadLevel(Application.loadedLevel);
+        }
     }
     // Update is called once per frame
     void FixedUpdate()
