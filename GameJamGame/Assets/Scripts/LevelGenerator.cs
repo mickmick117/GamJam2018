@@ -33,8 +33,8 @@ public class LevelGenerator : MonoBehaviour {
         tileIteration = 1;
         currentEmptySpace = 0;
 
-        emptyProbability = 10;
-        movingTileProbability = 10;
+        emptyProbability = 50;
+        movingTileProbability = 50;
 
         Instantiate(Ground, new Vector2(0, 0), Quaternion.identity);
 
