@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// reference: https://www.youtube.com/watch?v=DmYArT8h4EQ
+
 public class LevelGenerator : MonoBehaviour {
 
    public GameObject Ground;
+   public GameObject MovingTile;
 
     int maxGround;
     int maxLength;
@@ -17,6 +20,7 @@ public class LevelGenerator : MonoBehaviour {
     int tileIteration;
 
     float emptyProbability;
+    float movingTileProbability;
 
 	// Use this for initialization
 	void Start () {
@@ -30,14 +34,26 @@ public class LevelGenerator : MonoBehaviour {
         currentEmptySpace = 0;
 
         emptyProbability = 50;
+        movingTileProbability = 50;
 
         Instantiate(Ground, new Vector2(0, 0), Quaternion.identity);
 
         for (int i = 1; i < maxGround; i++)
         {
             int emptyRandom = Random.Range(0, 100);
+            int movingTileRandom = Random.Range(0, 100);
+            int heigth;
 
-            if (emptyRandom < emptyProbability && currentEmptySpace < 5) // on met du vide
+            if (movingTileRandom < movingTileProbability)
+            {
+                heigth = Mathf.RoundToInt(Random.Range(minHeigth, maxHeigth));
+
+                tileIteration += 5;
+                Instantiate(MovingTile, new Vector2(tileIteration, heigth), Quaternion.identity);
+                tileIteration += 3;
+                tileIteration += 5;
+            }
+            else if (emptyRandom < emptyProbability && currentEmptySpace < maxEmptySpace) // on met du vide
             {
                 currentEmptySpace++;
                 tileIteration++;
@@ -46,7 +62,7 @@ public class LevelGenerator : MonoBehaviour {
             {
                 currentEmptySpace = 0;
                 int nbGround = Mathf.RoundToInt(Random.Range(minLength, maxLength));
-                int heigth = Mathf.RoundToInt(Random.Range(minHeigth, maxHeigth));
+                heigth = Mathf.RoundToInt(Random.Range(minHeigth, maxHeigth));
 
                 for (int j = 0; j < nbGround; j++)
                 {

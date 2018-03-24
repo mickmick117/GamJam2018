@@ -222,6 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ground: {fileID: 1405135641089282, guid: 86273c7d3c520be40b96690ebb0cb46f, type: 2}
+  MovingTile: {fileID: 1952126072389146, guid: cd25c744976984a4f90a1781df002279, type: 2}
 --- !u!4 &1728287903
 Transform:
   m_ObjectHideFlags: 0
