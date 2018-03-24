@@ -12,8 +12,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D myRigidbody;
     private bool facingRight;
     private Animator myAnimator;
+    private bool jump = false;
 
-    
 
     // Use this for initialization
     void Start()
@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     {
         float horizontal = Input.GetAxis("Horizontal");
         HandleMovement(horizontal);
+        HandleJump();
         Flip(horizontal);
         myRigidbody.AddForce(Vector3.down * gravity * myRigidbody.mass);
         RestValues();
@@ -51,11 +52,18 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Jump"))
-            {
-                myRigidbody.velocity = new Vector3(0, 10 * JumpHeight * Time.deltaTime, 0);
-            }
+            jump = true;
         }
+    }
+
+    private void HandleJump()
+    {
+        if (jump && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Jump"))
+        {
+            myAnimator.SetTrigger("jump");
+            myRigidbody.velocity = new Vector3(0, 10 * JumpHeight * Time.deltaTime, 0);
+        }
+
     }
 
     private void Flip(float horizontal)
@@ -71,6 +79,6 @@ public class Player : MonoBehaviour
 
     private void RestValues()
     {
-
+        jump = false;
     }
 }
