@@ -7,16 +7,20 @@ public class Player : MonoBehaviour
 
     public float Speed = 1;
     public float JumpHeight = 1;
+    public float gravity = 1;
 
     private Rigidbody2D myRigidbody;
     private bool facingRight;
     private Animator myAnimator;
+
+    
 
     // Use this for initialization
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
+        myRigidbody.freezeRotation = true;
     }
 
     private void Update()
@@ -33,6 +37,7 @@ public class Player : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         HandleMovement(horizontal);
         Flip(horizontal);
+        myRigidbody.AddForce(Vector3.down * gravity * myRigidbody.mass);
         RestValues();
     }
 
@@ -46,7 +51,10 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            myRigidbody.velocity = new Vector3(0, 10 * JumpHeight * Time.deltaTime, 0);
+            if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Jump"))
+            {
+                myRigidbody.velocity = new Vector3(0, 10 * JumpHeight * Time.deltaTime, 0);
+            }
         }
     }
 
