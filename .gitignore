@@ -13,6 +13,7 @@ Assets/AssetStoreTools*
 ExportedObj/
 .consulo/
 /Library/
+/GamJam2018/
 *.csproj
 *.unityproj
 *.sln
