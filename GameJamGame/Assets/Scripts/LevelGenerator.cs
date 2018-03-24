@@ -11,9 +11,12 @@ public class LevelGenerator : MonoBehaviour {
     int minLength;
     int maxHeigth;
     int minHeigth;
+    int maxEmptySpace;
+    int currentEmptySpace;
     int currentLevel = 1;
-    int groundIteration;
+    int tileIteration;
 
+    float emptyProbability;
 
 	// Use this for initialization
 	void Start () {
@@ -22,20 +25,35 @@ public class LevelGenerator : MonoBehaviour {
         minLength = 1;
         maxHeigth = 3;
         minHeigth = -3;
-        groundIteration = 1;
+        maxEmptySpace = 5;
+        tileIteration = 1;
+        currentEmptySpace = 0;
+
+        emptyProbability = 50;
 
         Instantiate(Ground, new Vector2(0, 0), Quaternion.identity);
 
         for (int i = 1; i < maxGround; i++)
         {
-            int nbGround = Mathf.RoundToInt(Random.Range(minLength, maxLength));
-            int heigth = Mathf.RoundToInt(Random.Range(minHeigth, maxHeigth));
+            int emptyRandom = Random.Range(0, 100);
 
-            for (int j = 0; j < nbGround; j++)
+            if (emptyRandom < emptyProbability && currentEmptySpace < 5) // on met du vide
             {
-                Instantiate(Ground, new Vector2(groundIteration, heigth), Quaternion.identity);
-                groundIteration++;
+                currentEmptySpace++;
+                tileIteration++;
             }
+            else
+            {
+                currentEmptySpace = 0;
+                int nbGround = Mathf.RoundToInt(Random.Range(minLength, maxLength));
+                int heigth = Mathf.RoundToInt(Random.Range(minHeigth, maxHeigth));
+
+                for (int j = 0; j < nbGround; j++)
+                {
+                    Instantiate(Ground, new Vector2(tileIteration, heigth), Quaternion.identity);
+                    tileIteration++;
+                }
+            }            
         }
     }
 	
