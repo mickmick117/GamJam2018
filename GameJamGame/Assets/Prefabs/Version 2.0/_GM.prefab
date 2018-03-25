@@ -53,11 +53,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLevel: 0
-  score: {fileID: 0}
-  totalScore: {fileID: 0}
-  background: {fileID: 0}
-  foreground: {fileID: 0}
-  sky: {fileID: 0}
+  score: {fileID: 114202607093912088, guid: 6dad0aa67c159f84abbb7f601b96b765, type: 2}
+  totalScore: {fileID: 114209552543362684, guid: 6dad0aa67c159f84abbb7f601b96b765,
+    type: 2}
+  background: {fileID: 1005424866474402, guid: cbfaad8f92b35274090b038d015a7a06, type: 2}
+  foreground: {fileID: 1068997235193400, guid: 197a1d4a6ee9a954abcfd6b8211ac78c, type: 2}
+  sky: {fileID: 1521215958077866, guid: 35f31c0b50314bc4c9efb94349f1f97e, type: 2}
   platform: {fileID: 0}
   movingTile: {fileID: 0}
   bgList:
@@ -87,6 +88,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgrounds:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 4385541411557086, guid: cbfaad8f92b35274090b038d015a7a06, type: 2}
+  - {fileID: 4271195736698880, guid: 197a1d4a6ee9a954abcfd6b8211ac78c, type: 2}
   smoothing: 1

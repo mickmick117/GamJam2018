@@ -323,7 +323,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 4294966783
-  game: {fileID: 0}
+  game: {fileID: 114381053229346146, guid: 9cd152195db48094b9918aa482acda27, type: 2}
 --- !u!114 &114680575310491260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 399fd3fdd562e6b489b0cdc7eb0b5649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  game: {fileID: 0}
+  game: {fileID: 114381053229346146, guid: 9cd152195db48094b9918aa482acda27, type: 2}
 --- !u!212 &212554528685757638
 SpriteRenderer:
   m_ObjectHideFlags: 1
