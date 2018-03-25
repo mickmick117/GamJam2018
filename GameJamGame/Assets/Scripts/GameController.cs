@@ -11,12 +11,34 @@ public class GameController : MonoBehaviour {
     public Score score;
     public totalScore totalScore;
 
+    public GameObject background;
+    public GameObject foreground;
+    public GameObject sky;
+    public GameObject platform;
+    public GameObject movingTile;
 
-	// Use this for initialization
-	void Start () {
+    public Sprite[] bgList;
+    public Sprite[] fgList;
+    public Sprite[] skyList;
+    public Sprite[] platformList;
+    public Sprite[] movingTileList;
+
+
+    // Use this for initialization
+    void Start () {
         maxLevel = 3;
         totalScore.setTotalScore(currentScore);
-	}
+
+        SpriteRenderer bg = background.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+        SpriteRenderer fg = foreground.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+        SpriteRenderer sk = sky.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+        /* SpriteRenderer pf = platform.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+         SpriteRenderer mt = movingTile.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;*/
+
+        bg.sprite = bgList[currentLevel-1];
+        fg.sprite = fgList[currentLevel - 1];
+        sk.sprite = skyList[currentLevel - 1];
+    }
 
     private void Awake()
     {
@@ -32,9 +54,9 @@ public class GameController : MonoBehaviour {
     {
         if (currentLevel + 1 <= maxLevel)
         {
-            currentLevel++;
+            currentLevel++;  
         }
-        currentScore = score.score;
+        currentScore = currentScore + score.score;
         totalScore.setTotalScore(currentScore);
     }
 

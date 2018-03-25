@@ -71,11 +71,11 @@ public class LevelGenerator : MonoBehaviour {
 
     private void setDifficulty()
     {
-        maxGround = 30 + (10 * game.getLevel());
+        maxGround = 0 + (5 * game.getLevel());
         maxLength = 8;
         minLength = 1;
         maxHeigth = 3;
-        minHeigth = -3;
+        minHeigth = -2;
         maxEmptySpace = 5;
 
         int prob = 10 * game.getLevel() > 90 ? 90 : 10 * game.getLevel();

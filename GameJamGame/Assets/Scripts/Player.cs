@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
     bool justLanded = false;
     float horizontal = 0;
 
+    public GameController game;
+
     // Use this for initialization
     void Start()
     {
@@ -45,6 +47,7 @@ public class Player : MonoBehaviour
 
         if (myRigidbody.position.y < deadZoneLimit)
         {
+            game.restartGame();
             Application.LoadLevel(Application.loadedLevel);
         }
     }
