@@ -15,6 +15,9 @@ public class GameController : MonoBehaviour {
     public GameObject foreground;
     public GameObject sky;
 
+    public GameObject[] player;
+    public Camera cam;
+
     public Sprite[] bgList;
     public Sprite[] fgList;
     public Sprite[] skyList;
@@ -25,6 +28,10 @@ public class GameController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         maxLevel = 2;
+        PlayerPrefs.SetInt("maxLevel", 2);
+        currentLevel = PlayerPrefs.GetInt("currentLevel",1);
+
+        
         totalScore.setTotalScore(currentScore);
 
         SpriteRenderer bg = background.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
@@ -49,7 +56,7 @@ public class GameController : MonoBehaviour {
 
     private void Awake()
     {
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
     }
 
     // Update is called once per frame
@@ -59,9 +66,10 @@ public class GameController : MonoBehaviour {
 
     public void updateLevel()
     {
-        if (currentLevel + 1 <= maxLevel)
+        if (currentLevel + 1 <= PlayerPrefs.GetInt("maxLevel"))
         {
-            currentLevel++;  
+            currentLevel++;
+            PlayerPrefs.SetInt("currentLevel", currentLevel);
         }
         currentScore = currentScore + score.score;
         totalScore.setTotalScore(currentScore);
@@ -75,6 +83,7 @@ public class GameController : MonoBehaviour {
     public void restartGame()
     {
         currentLevel = 1;
+        PlayerPrefs.SetInt("currentLevel", currentLevel);
         currentScore = 0;
         totalScore.setTotalScore(0);
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class RaphPlayer : MonoBehaviour {
@@ -19,7 +20,8 @@ public class RaphPlayer : MonoBehaviour {
         if (coll.gameObject.tag == "finishTag")
         {
             game.updateLevel();
-            Application.LoadLevel(Application.loadedLevel);
+            //Application.LoadLevel(Application.loadedLevel);
+            SceneManager.LoadScene("raphV2");
         }
 
     }
