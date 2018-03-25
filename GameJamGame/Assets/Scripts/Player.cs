@@ -47,6 +47,8 @@ public class Player : MonoBehaviour
 
         if (myRigidbody.position.y < deadZoneLimit)
         {
+            MusicSource.clip = Jump;
+            MusicSource.Play();
             game.restartGame();
             Application.LoadLevel(Application.loadedLevel);
         }
@@ -125,6 +127,7 @@ public class Player : MonoBehaviour
 
     private void HandleJump()
     {
+        Debug.Log(this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Jump"));
         if (jump && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Jump") && grounded)
         {
             
