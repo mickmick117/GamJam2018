@@ -14,8 +14,6 @@ public class GameController : MonoBehaviour {
     public GameObject background;
     public GameObject foreground;
     public GameObject sky;
-    public GameObject platform;
-    public GameObject movingTile;
 
     public Sprite[] bgList;
     public Sprite[] fgList;
@@ -26,18 +24,27 @@ public class GameController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        maxLevel = 3;
+        maxLevel = 2;
         totalScore.setTotalScore(currentScore);
 
         SpriteRenderer bg = background.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
         SpriteRenderer fg = foreground.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
         SpriteRenderer sk = sky.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
-        /* SpriteRenderer pf = platform.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
-         SpriteRenderer mt = movingTile.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;*/
+
 
         bg.sprite = bgList[currentLevel-1];
         fg.sprite = fgList[currentLevel - 1];
         sk.sprite = skyList[currentLevel - 1];
+
+       GameObject[] allTile;
+       allTile = GameObject.FindGameObjectsWithTag("tileTag");
+        
+
+        for (int i = 0; i < allTile.Length; i++)
+        {
+            SpriteRenderer t = allTile[i].GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+            t.sprite = platformList[currentLevel - 1];
+        }
     }
 
     private void Awake()
