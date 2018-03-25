@@ -1,34 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-    public static int currentLevel = 1;
+    public int currentLevel;
     public int maxLevel;
-    public static int currentScore = 0;
+    //private int currentScore = 0;
 
     public Score score;
     public totalScore totalScore;
 
-    public GameObject background;
+   /* public GameObject background;
     public GameObject foreground;
-    public GameObject sky;
+    public GameObject sky;*/
 
-    public GameObject[] player;
+   /* public GameObject[] players;
+    public GameObject playerContainer;
     public Camera cam;
 
     public Sprite[] bgList;
     public Sprite[] fgList;
     public Sprite[] skyList;
     public Sprite[] platformList;
-    public Sprite[] movingTileList;
+    public Sprite[] movingTileList;*/
 
 
     // Use this for initialization
     void Start () {
         maxLevel = 2;
-        PlayerPrefs.SetInt("maxLevel", 2);
+        totalScore.score = PlayerPrefs.GetInt("totalScore", 0);
+       /* PlayerPrefs.SetInt("maxLevel", 2);
         currentLevel = PlayerPrefs.GetInt("currentLevel",1);
 
         
@@ -51,8 +55,13 @@ public class GameController : MonoBehaviour {
         {
             SpriteRenderer t = allTile[i].GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
             t.sprite = platformList[currentLevel - 1];
-        }
+        }*/
     }
+
+    /*private void addPlayer ()
+    {
+        players[currentLevel - 1].transform.parent = playerContainer;
+    }*/
 
     private void Awake()
     {
@@ -68,11 +77,27 @@ public class GameController : MonoBehaviour {
     {
         if (currentLevel + 1 <= PlayerPrefs.GetInt("maxLevel"))
         {
-            currentLevel++;
-            PlayerPrefs.SetInt("currentLevel", currentLevel);
+            /* currentLevel++;
+             PlayerPrefs.SetInt("currentLevel", currentLevel);*/
+
+         /*   switch (currentLevel)
+            {
+                case 1:
+                    SceneManager.LoadScene("level1");
+                    break;
+                case 2:
+                    SceneManager.LoadScene("level 2");
+                    break;
+                case 3:
+                    SceneManager.LoadScene("level3");
+                    break;
+                default:
+                    break;
+            }*/
         }
-        currentScore = currentScore + score.score;
-        totalScore.setTotalScore(currentScore);
+        //currentScore = currentScore + score.score;
+        PlayerPrefs.SetInt("totalScore", PlayerPrefs.GetInt("totalScore", 0) + score.score);
+        //totalScore.setTotalScore(currentScore);
     }
 
     public int getLevel()
@@ -82,9 +107,9 @@ public class GameController : MonoBehaviour {
 
     public void restartGame()
     {
-        currentLevel = 1;
-        PlayerPrefs.SetInt("currentLevel", currentLevel);
-        currentScore = 0;
-        totalScore.setTotalScore(0);
+        //currentScore = 0;
+        //totalScore.setTotalScore(0);
+        PlayerPrefs.SetInt("totalScore", 0);
+        SceneManager.LoadScene("level1");
     }
 }

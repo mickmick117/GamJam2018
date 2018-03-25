@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
             MusicSource.clip = Jump;
             MusicSource.Play();
             game.restartGame();
-            Application.LoadLevel(Application.loadedLevel);
+            //Application.LoadLevel(Application.loadedLevel);
         }
     }
     // Update is called once per frame

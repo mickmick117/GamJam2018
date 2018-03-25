@@ -21,7 +21,7 @@ public class RaphPlayer : MonoBehaviour {
         {
             game.updateLevel();
             //Application.LoadLevel(Application.loadedLevel);
-            SceneManager.LoadScene("raphV2");
+            //SceneManager.LoadScene("raphV2");
         }
 
     }
