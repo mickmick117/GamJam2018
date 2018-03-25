@@ -9,6 +9,12 @@ public class Player : MonoBehaviour
     public float JumpHeight = 1;
     public float gravity = 1;
     public float deadZoneLimit = -7;
+    public AudioClip Jump;
+    public AudioClip Landing;
+    public AudioClip Die;
+    public AudioClip Foot;
+    public AudioSource MusicSource;
+    public AudioSource MusicSource2;
 
     private Rigidbody2D myRigidbody;
     private bool facingRight;
@@ -19,7 +25,8 @@ public class Player : MonoBehaviour
     public Transform groundCheck;
     private float groundRadius = 1f;
     public LayerMask whatIsGround;
-
+    bool justLanded = false;
+    float horizontal = 0;
 
     // Use this for initialization
     void Start()
@@ -45,7 +52,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
 
-        float horizontal = Input.GetAxis("Horizontal");
+        horizontal = Input.GetAxis("Horizontal");
         HandleMovement(horizontal);
         HandleJump();
         Flip(horizontal);
@@ -53,28 +60,74 @@ public class Player : MonoBehaviour
         RestValues();
     }
 
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        /*if (grounded != justLanded)
+        {
+            MusicSource2.clip = Landing;
+            MusicSource2.Play();
+            grounded = justLanded;
+        }*/
+        
+    }
+
     private void HandleInput()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             jump = true;
+            MusicSource.clip = Jump;
+            MusicSource.Play();
         }
+
+        if (grounded)
+        {
+            if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) && !MusicSource.isPlaying)
+            {
+                MusicSource.clip = Foot;
+                MusicSource.Play();
+                justLanded = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                MusicSource.clip = Foot;
+                MusicSource.Play();
+            }
+
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                MusicSource.clip = Foot;
+                MusicSource.Play();
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
+            {
+                if (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+                {
+                    MusicSource.Stop();
+                }
+            }
+        } 
     }
 
     private void HandleMovement(float horizontal)
     {
         myRigidbody.AddForce(Vector3.down * gravity * myRigidbody.mass);
-
         myRigidbody.velocity = new Vector2(horizontal * Speed, myRigidbody.velocity.y);
         myAnimator.SetFloat("speed", Mathf.Abs(horizontal));
+        
     }
 
     private void HandleJump()
     {
         if (jump && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Jump") && grounded)
         {
+            
             myAnimator.SetTrigger("jump");
             myRigidbody.velocity = new Vector3(0, 10 * JumpHeight * Time.deltaTime, 0);
+            
         }
 
     }

@@ -4,7 +4,9 @@ using UnityEngine;
 
 // reference: https://answers.unity.com/questions/769707/how-to-make-moving-tiles-in-side-scroller.html
 
-public class MovingTile : MonoBehaviour {
+public class MovingTile : MonoBehaviour
+{
+
 
     private bool movingLeft;
     private bool movingDown;
@@ -12,8 +14,25 @@ public class MovingTile : MonoBehaviour {
     private int movingLength = 3;
     private bool horizontal = true;
 
+    GameObject thePlayer;
+    private Vector3 offset;
+
+    void OnTriggerStay2D(Collider2D col)
+    {
+        Debug.Log("Hit");
+        thePlayer.transform.position = transform.position;
+    }
+    void OnTriggerExit2D(Collider2D col)
+    {
+        thePlayer = null;
+    }
+
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
+        GameObject thePlayer = GameObject.Find("ThePlayer");
+
+
         initialPosition = transform.position;
         float directionRandom = Random.Range(0, 100);
 
@@ -33,15 +52,16 @@ public class MovingTile : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
 
-       
+
     }
 
     private void MoveTile()
     {
         if (horizontal)
-        {       
+        {
             if (transform.position.x < initialPosition.x - movingLength)
             {
                 movingLeft = false;
