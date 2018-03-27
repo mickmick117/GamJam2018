@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     public AudioClip Foot;
     public AudioSource MusicSource;
     public AudioSource MusicSource2;
-
+    ParticleSystem Particle;
     private Rigidbody2D myRigidbody;
     private bool facingRight;
     private Animator myAnimator;
@@ -25,10 +25,14 @@ public class Player : MonoBehaviour
     public Transform groundCheck;
     private float groundRadius = 1f;
     public LayerMask whatIsGround;
-    bool justLanded = false;
     float horizontal = 0;
 
+    private MovingTile mt;
+    bool playerOnMovingTile = false;
+
     public GameController game;
+
+    bool dead = false;
 
     // Use this for initialization
     void Start()
@@ -36,6 +40,7 @@ public class Player : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         myRigidbody.freezeRotation = true;
+        Particle = GetComponent<ParticleSystem>();
     }
 
     private void Update()
@@ -45,12 +50,23 @@ public class Player : MonoBehaviour
 
         HandleInput();
 
-        if (myRigidbody.position.y < deadZoneLimit)
+        if (myRigidbody.position.y < deadZoneLimit && !dead && !myRigidbody.isKinematic)
         {
-            MusicSource.clip = Jump;
-            MusicSource.Play();
             game.restartGame();
+            dead = true;
             //Application.LoadLevel(Application.loadedLevel);
+        }
+
+        if (playerOnMovingTile && mt.horizontal)
+        {
+            if (mt.movingLeft)
+            {
+                transform.Translate(new Vector2(-0.0425f, 0));
+            }
+            else
+            {
+                transform.Translate(new Vector2(0.0425f, 0));
+            }
         }
     }
     // Update is called once per frame
@@ -68,31 +84,44 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        /*if (grounded != justLanded)
+        if (coll.gameObject.tag == "finishTag")
         {
-            MusicSource2.clip = Landing;
-            MusicSource2.Play();
-            grounded = justLanded;
-        }*/
-        
+            myRigidbody.isKinematic = true;
+            game.updateLevel();
+        }
+
+        if (coll.gameObject.tag == "movingTileTag")
+        {
+            mt = coll.transform.GetComponent(typeof(MovingTile)) as MovingTile; // coll.transform.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+            playerOnMovingTile = true;
+        }
+
+    }
+
+    void OnCollisionExit2D(Collision2D coll)
+    {
+        /*if (coll.gameObject.tag == "movingTileTag")
+        {*/
+            playerOnMovingTile = false;
+        //}
     }
 
     private void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (grounded && Input.GetKeyDown(KeyCode.Space) && myRigidbody.position.y > deadZoneLimit)
         {
             jump = true;
+            
             MusicSource.clip = Jump;
             MusicSource.Play();
         }
 
-        if (grounded)
+        if ((grounded && myRigidbody.position.y > deadZoneLimit) && !myRigidbody.isKinematic)
         {
             if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) && !MusicSource.isPlaying)
             {
                 MusicSource.clip = Foot;
                 MusicSource.Play();
-                justLanded = false;
             }
 
             if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -115,10 +144,24 @@ public class Player : MonoBehaviour
                 }
             }
         } 
+        if (myRigidbody.isKinematic || myRigidbody.position.y < deadZoneLimit)
+        {
+            MusicSource.Stop();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
     }
 
     private void HandleMovement(float horizontal)
     {
+        if ( horizontal == 0)
+        {
+           
+        }
         myRigidbody.AddForce(Vector3.down * gravity * myRigidbody.mass);
         myRigidbody.velocity = new Vector2(horizontal * Speed, myRigidbody.velocity.y);
         myAnimator.SetFloat("speed", Mathf.Abs(horizontal));

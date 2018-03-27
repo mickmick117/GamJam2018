@@ -9,19 +9,19 @@ public class LevelGenerator : MonoBehaviour {
    public GameObject Ground;
    public GameObject MovingTile;
    public GameObject FinishLine;
-    public GameController game;
+   public GameController game;
 
-    int maxGround;
-    int maxLength;
-    int minLength;
-    int maxHeigth;
-    int minHeigth;
-    int maxEmptySpace;
+    public int maxGround;
+    public int maxLength;
+    public int minLength;
+    public int maxHeigth;
+    public int minHeigth;
+    public int maxEmptySpace;
     int currentEmptySpace;
     int tileIteration;
 
-    float emptyProbability;
-    float movingTileProbability;
+    public float emptyProbability;
+    public float movingTileProbability;
 
 	// Use this for initialization
 	void Start () {
@@ -42,10 +42,10 @@ public class LevelGenerator : MonoBehaviour {
             {
                 heigth = Mathf.RoundToInt(Random.Range(minHeigth, maxHeigth));
 
-                tileIteration += 5;
+                tileIteration += 4;
                 Instantiate(MovingTile, new Vector2(tileIteration, heigth), Quaternion.identity);
                 tileIteration += 3;
-                tileIteration += 5;
+                tileIteration += 4;
             }
             else if (emptyRandom < emptyProbability && currentEmptySpace < maxEmptySpace) // on met du vide
             {
@@ -66,21 +66,26 @@ public class LevelGenerator : MonoBehaviour {
             }            
         }
 
-        Instantiate(FinishLine, new Vector2(tileIteration, maxHeigth), Quaternion.identity);
+        for (int i = 0; i < 40; i++) // ajout dune ligne droite
+        {
+            Instantiate(Ground, new Vector2(tileIteration, 0), Quaternion.identity);
+            tileIteration++;
+        }
+
+        Instantiate(FinishLine, new Vector2(tileIteration, 1), Quaternion.identity);
+
+        for (int i = 0; i < 50; i++) // ajout dune ligne droite
+        {
+            Instantiate(Ground, new Vector2(tileIteration, 0), Quaternion.identity);
+            tileIteration++;
+        }
     }
 
     private void setDifficulty()
     {
-        maxGround = 0 + (5 * game.getLevel());
-        maxLength = 8;
-        minLength = 1;
-        maxHeigth = 3;
-        minHeigth = -2;
-        maxEmptySpace = 5;
-
-        int prob = 10 * game.getLevel() > 90 ? 90 : 10 * game.getLevel();
+        /*int prob = 10 * game.getLevel() > 90 ? 90 : 10 * game.getLevel();
         emptyProbability = prob;
-        movingTileProbability = prob;
+        movingTileProbability = prob;*/
     }
 	
 	// Update is called once per frame

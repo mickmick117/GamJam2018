@@ -18,6 +18,9 @@ public class Score : MonoBehaviour {
 
     void DecreaseScore ()
     {
-        score--;
+        if (score >= 1)
+        {
+            score--;
+        }
     }
 }

@@ -8,11 +8,11 @@ public class MovingTile : MonoBehaviour
 {
 
 
-    private bool movingLeft;
-    private bool movingDown;
+    public bool movingLeft;
+    public bool movingDown;
     private Vector3 initialPosition;
     private int movingLength = 3;
-    private bool horizontal = true;
+    public bool horizontal = true;
 
     GameObject thePlayer;
     private Vector3 offset;
@@ -36,18 +36,18 @@ public class MovingTile : MonoBehaviour
         initialPosition = transform.position;
         float directionRandom = Random.Range(0, 100);
 
-        if (directionRandom > 50) // horizontal
+       /* if (directionRandom > 50) // horizontal
         {
             float randomDeplacement = Random.Range(movingLength * -1, movingLength);
             transform.Translate(new Vector2(randomDeplacement, 0));
             horizontal = true;
         }
         else // vertical
-        {
+        {*/
             float randomDeplacement = Random.Range(movingLength * -1, movingLength);
             transform.Translate(new Vector2(0, randomDeplacement));
             horizontal = false;
-        }
+        //}
         InvokeRepeating("MoveTile", 0.0f, 0.02f);
     }
 

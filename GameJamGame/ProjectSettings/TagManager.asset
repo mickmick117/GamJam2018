@@ -6,6 +6,7 @@ TagManager:
   tags:
   - finishTag
   - tileTag
+  - movingTileTag
   layers:
   - Default
   - TransparentFX

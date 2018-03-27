@@ -8,12 +8,12 @@ public class totalScore : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
         GetComponent<UnityEngine.UI.Text>().text = "Total Score : " + score;
+
     }
 
     public int getTotalScore ()
